@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .stage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Prima scena - Cuore */
+        #heart-stage {
+            z-index: 3;
+            animation: 
+                heartScene 2s ease-out forwards,
+                fadeOut 0.5s ease 2s forwards;
+        }
+
+        .heart-container {
+            position: relative;
+            margin-top: 30px;
+        }
+
+        .heart {
+            width: 120px;
+            height: 120px;
+            animation: heartForm 1s ease-out;
+        }
+
+        .heart::before, .heart::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 110px;
+            border-radius: 70px 70px 0 0;
+            background: #ff3366;
+        }
+
+        .heart::before {
+            left: 70px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .heart-text {
+            color: #fff;
+            font-size: 2.5em;
+            text-align: center;
+            margin: 0 0 30px 0;
+            animation: textDown 0.5s ease-out 0.5s forwards;
+        }
+
+        /* Seconda scena - Testo */
+        #text-stage {
+            z-index: 2;
+            opacity: 0;
+            animation: 
+                stageIn 1s ease 2.5s forwards,
+                fadeOut 0.5s ease 5s forwards;
+        }
+
+        .main-text {
+            color: #fff;
+            font-size: 2em;
+            text-align: center;
+            margin: 0 0 20px 0;
+        }
+
+        .infinity {
+            color: #ff3366;
+            font-size: 80px;
+            animation: infinityAnim 2s ease-in-out infinite;
+        }
+
+        /* Terza scena - Meme */
+        #meme-stage {
+            z-index: 1;
+            opacity: 0;
+            animation: stageIn 1s ease 5.5s forwards;
+        }
+
+        .meme-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+
+        .meme-img {
+            width: 100%;
+            height: 100%;
+            border: 3px solid #00ff00;
+            filter: sepia(1);
+        }
+
+        .meme-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 35px;
+            color: #ff00ff;
+            text-shadow: 2px 2px #000;
+        }
+
+        /* Animazioni */
+        @keyframes heartForm {
+            0% { transform: scale(0); }
+            60% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes textDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes stageIn {
+            from { opacity: 0; transform: translate(-50%, -40%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        @keyframes infinityAnim {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Prima scena -->
+    <div id="heart-stage" class="stage">
+        <div class="heart-text">AMORE TI AMO +3</div>
+        <div class="heart-container">
+            <div class="heart"></div>
+        </div>
+    </div>
+
+    <!-- Seconda scena -->
+    <div id="text-stage" class="stage">
+        <div class="main-text">Anche se lontani<br>ti penso sempre</div>
+        <div class="infinity">∞</div>
+    </div>
+
+    <!-- Terza scena -->
+    <div id="meme-stage" class="stage">
+        <div class="meme-container">
+            <img src="mio-padre-forreal.png" class="meme-img" alt="meme">
+            <div class="meme-text">CKRASM strbno</div>
+        </div>
+    </div>
+
+    <audio id="meme-sound" loop>
+        <source src="https://www.myinstants.com/media/sounds/yakety-sax.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Sincronizzazione audio
+        setTimeout(() => {
+            const audio = document.getElementById('meme-sound');
+            audio.play().catch(() => {
+                document.body.addEventListener('click', () => audio.play());
+            });
+        }, 5000);
+
+        // Rimozione sicura degli elementi
+        setTimeout(() => {
+            document.getElementById('heart-stage').style.display = 'none';
+        }, 2500);
+    </script>
+</body>
+</html>
